@@ -1,0 +1,98 @@
+CS 422/522 Software Engineering Project 2: Quack-Time
+
+Brief Description of System:
+
+    Quack-Time is a web app that provides a way to visualize user tasks and needed completion times and productivity with those tasks.
+    It follows the Pomodoro method, which states that users are most productive by working in 25-minute sessions followed by 5-minute breaks. Please see the SRS document for more information on the Pomodoro Method.
+
+    A typical use-case will see users creating "task boards" to hold their tasks. Then users will start timers and work on such tasks.
+
+    Upon completion of the timer, users self-input their productivity with the task they worked on.
+
+    There is a “proDUCKtivity” log, so the user can further visualize their productivity.
+
+    Quack-Time is University of Oregon themed and is geared towards students to use as a study tool.
+
+
+Authors:
+    Neal Kimchi, Nikhar Ramlakhan, Areyan Rastawan, Abie Safdie
+
+Released:
+    06/03/2024
+
+Creation:
+        This software was created to satisfy the assignment assigned by Prof. Anthony Hornof in CS 422 Spring term 2024 at the U of O.
+         The assignment was titled Project 2 - Quack Time
+
+What needs to be done to run the python program:
+
+        Correct python version, necessary dependencies, and a working server and database connection need to be established.
+
+        Python Version: 3.12
+        Dependencies: bcrypt, Functools (part of Python standard library), Flask, mysql-connector-python
+            - minimum required versions:
+                - bcrypt: 4.1.2
+                - Flask: 2.0.1
+                - mysql-connector-python: 8.3.0
+        Server/Database: mysql-connector-python
+
+        Note: Flask approved in email from Abie Safdie to Prof. Hornof on 5/22/2024
+              Bcrypt approved in email from Nikhar Ramlakhan to Prof. Hornof on 5/28/2024
+
+        Please see Installation Instructions and our Server installation instructions
+        in our submission for more information on how to achieve these requirements.
+
+        TO RUN OUR WEB APP:
+
+                macOS / Linux complete the following:
+                    - in the terminal type: python3 app.py (must be in directory containing app.py, see directory structure below)
+                    - type in "localhost:5002" in your web browser
+
+                Windows complete the following:
+                    - in cmd prompt: python app.py (must be in directory containing app.py, see directory structure below)
+                    - type in "localhost:5002" in your web browser
+
+                From an IDE: in any IDE of your choice, you may run our program. See your specific IDE's documentation on how to achieve this
+
+
+	To Terminate our Web App:
+
+		- Close the browser that you are using to run our web app
+		- Terminate the python script by entering control+c into your terminal or by terminating the script in the IDE of your choosing
+
+
+What is located in our Directories/Subdirectories:
+
+        Root Directory:
+                README.txt                      - this readme file
+                SRS.pdf                         - our software requirements specifcations
+                SDS.pdf                         - our software design specifications
+                Project_Plan.pdf                - containing the plan to complete this project
+                Programmar_Documentation.pdf    - document providing documentation on our source code
+                Installation_Instructions.pdf   - document providing documentation on how to install dependencies
+                User_Documentation.pdf          - document providing documentation on how the user can use the software
+                Quack Time/                     - directory containing our source code and necessary image files
+
+        Quack Time directory:
+
+                app.py           - this is the main driver of our program.
+                db.py            - helper python file that handles communication between app and database
+
+                /static          - directory containing our css, javascript, and image files
+                    /css         - css files
+                        create_user.css
+                        homepage.css
+                        login.css
+                        logs.css
+                    /js           - javascript files
+                        homepage.js
+                        timer.js
+                    /images       - images (for background of webpage)
+                        ducktimer.png
+
+                /templates        - directory containing our html files
+                    create_user.html
+                    homepage.html
+                    login.html
+                    logs.html
+

@@ -1,0 +1,58 @@
+<!--
+This HTML file creates the logs page for the Quack Time application.
+It includes a table that displays logs of productivity sessions, showing details such as date/time, task board, task, time spent, and productivity rating.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs - Quack Time</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/logs.css">
+</head>
+<body>
+    <div class="header-buttons">
+        <a href="/homepage" class="back-button">Back to Homepage</a>
+    </div>
+    <div class="container">
+        <h1>ProDUCKtivity Logs</h1>
+        <div class="logs-container">
+            <table id="logsTable">
+                <thead>
+                    <tr>
+                        <th>Date/Time</th>
+                        <th>Task Board</th>
+                        <th>Task</th>
+                        <th>Time Spent</th>
+                        <th>Productivity Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/get-logs')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector("#logsTable tbody");
+                    data.forEach(log => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${new Date(log.Date).toLocaleString()}</td>
+                            <td>${log['Board Name']}</td>
+                            <td>${log['Task Name']}</td>
+                            <td>${log.TimeSpent}</td>
+                            <td>${log.Rating}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching logs:', error));
+        });
+    </script>
+</body>
+</html>

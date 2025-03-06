@@ -1,0 +1,442 @@
+
+                                QuackTime Programmer's Documentation
+                                        CS 422 Spring 2024
+                    Neal Kimchi, Nikhar Ramlakhan, Areyan Rastawan, Abie Safdie
+
+
+This documentation should assist the programmers in making additional modifications to QuackTime.
+It provides an overview of:
+
+1. Installation Guide
+2. Software Dependencies
+3. Required Versions of Components
+4. Source Code File Relationships
+5. Purpose and Inner Workings
+6. Source Code Line Analysis
+7. Variable Purposes, Scope, and Lifetime
+8. Database Structure and Relationships
+
+INSTALLATION GUIDE                                                                                                   1
+------------------
+To install the QuackTime Software, follow these steps:
+
+- Download the QuackTime source code files.
+- Ensure that Python is installed on your system.
+- Python versions can be found here: https://www.python.org/downloads/
+- Install the mysql-connector package using pip: pip install mysql-connector-python.
+- Install the bcrypt package using pip: pip install bcrypt
+- Install the Flask package using pip: pip install Flask
+
+
+Run the app.py file to start the application through the terminal: python app.py
+
+SOFTWARE DEPENDENCIES                                                                                                2
+---------------------
+QuackTime's software relies on the following dependencies:
+
+- Python: The core programming language used for development.
+- MySQL Connector: Required for communication with the MySQL database.
+- bcrypt: For users' password protection.
+- Flask: For developing web application with Python.
+
+REQUIRED VERSIONS OF COMPONENTS                                                                                      3
+--------------------------------
+QuackTime does not have strict requirements for specific version of its components, however it is noted that the development
+was done with the latest version available as of 3 June 2024 of its dependencies.
+
+It is therefore recommended that the developer uses the following versions of these components:
+- Python 3.12 or higher
+- MySQL Connector 8.3 or higher
+- bcrypt 4.0.1 or higher
+- Flask 2.3.2 or higher
+
+SOURCE CODE FILE RELATIONSHIPS											      4
+------------------------------
+
+QuackTime's software consists of the following source code files:
+
+Python files:
+
+    app.py:
+        - Main application file responsible for the user interface and interaction between the user and system.
+        - Handles routing, rendering HTML templates, and processing user inputs.
+        - Connects with db.py to interact with the database and manage user data.
+
+    db.py:
+        - Defines functions for database communication.
+        - Contains the database connection setup and functions to perform CRUD (Create, Read, Update, Delete) operations.
+        - Works closely with app.py to send and receive data from the database server.
+
+HTML files:
+
+    create_user.html:
+        - Works with app.py to render the user registration form.
+        - Form submission sends data to app.py to create a new user in the database via db.py.
+
+    homepage.html:
+        - Interacts with app.py to display the main interface of the application.
+        - Shows task boards, tasks, and timer controls, and fetches data managed by db.py.
+
+    login.html:
+        - Communicates with app.py to handle user login requests.
+        - Submits DuckID and password to app.py, which verifies credentials using db.py.
+
+    logs.html:
+        - Fetches and displays productivity logs by interacting with app.py.
+        - Data displayed in the logs is retrieved from the database using db.py.
+
+JavaScript files:
+
+    timer.js:
+        - Handles the timer functionality, including setting custom times, starting/stopping the timer, and managing break periods.
+        - Works with homepage.html to update the timer display and handle user interactions related to tasks and productivity feedback.
+
+CSS files:
+
+    create_user.css:
+        - Styles the user registration page defined in create_user.html.
+
+    homepage.css:
+        - Styles the main interface of the application as defined in homepage.html.
+
+    login.css:
+        - Styles the login page as defined in login.html.
+
+    logs.css:
+        - Styles the productivity logs page as defined in logs.html.
+
+PURPOSE AND INNER WORKINGS                                                                                           5
+--------------------------
+
+Python files:
+
+    app.py:
+        - Purpose: Serves as the main application file responsible for handling user interface and interactions.
+        - Inner Workings: It manages routing to different pages, rendering HTML templates, and processing user inputs.
+          It interacts with the database through db.py, fetching and storing user data. app.py also includes logic for
+          user authentication, task management, and productivity tracking.
+
+    db.py:
+        - Purpose: Manages database communication.
+        - Inner Workings: Contains the setup for connecting to the database and defines functions for CRUD operations.
+          It includes queries to insert, update, retrieve, and delete data in the database. db.py acts as a bridge
+          between the app.py file and the database, ensuring data integrity and efficient data transactions.
+
+HTML files:
+
+    create_user.html:
+        - Purpose: Provides the user interface for creating a new user account.
+        - Inner Workings: Includes a form where users enter their details (first name, last name, DuckID, password).
+          The form data is sent to app.py, which processes the input and interacts with db.py to store the new user
+          details in the database.
+
+    homepage.html:
+        - Purpose: Acts as the main dashboard for the user.
+        - Inner Workings: Displays the task boards, tasks, and a timer to help users manage their productivity. It
+          fetches and displays data managed by app.py and db.py, and provides interactive elements for setting timers,
+          adding/removing tasks, and submitting productivity feedback.
+
+    login.html:
+        - Purpose: Facilitates user login.
+        - Inner Workings: Contains a form for entering DuckID and password. The form submission is handled by app.py,
+          which verifies the credentials against the database using db.py. Upon successful login, the user is
+          redirected to the homepage.
+
+    logs.html:
+        - Purpose: Displays the user's productivity logs.
+        - Inner Workings: Retrieves and displays data about productivity sessions from the database. It interacts
+          with app.py, which fetches the relevant logs from db.py and renders them in a table format for the user to
+          review their productivity over time.
+
+JavaScript files:
+
+    timer.js:
+        - Purpose: Manages the timer functionality on the homepage.
+        - Inner Workings: Handles setting custom times, starting/stopping the timer, and managing break periods. It
+          includes event handlers for user interactions and updates the timer display in real-time. Additionally, it
+          handles form submissions for setting times and productivity feedback, ensuring that user input is properly
+          processed and reflected in the interface.
+
+CSS files:
+
+    create_user.css:
+        - Purpose: Styles the create user page.
+        - Inner Workings: Defines the layout, colors, fonts, and other visual aspects of the create_user.html page. It
+          ensures the form and other elements are visually appealing and user-friendly.
+
+    homepage.css:
+        - Purpose: Styles the homepage.
+        - Inner Workings: Provides the visual design for the homepage, including the task boards, task list, timer, and
+          various modals. It ensures a cohesive look and feel, making the interface intuitive and pleasant to use.
+
+    login.css:
+        - Purpose: Styles the login page.
+        - Inner Workings: Defines the visual appearance of the login.html page. It includes styles for the form, buttons,
+          and overall layout, ensuring a clean and professional look.
+
+    logs.css:
+        - Purpose: Styles the logs page.
+        - Inner Workings: Provides the styling for the logs.html page, ensuring that the productivity logs are displayed
+          in a clear and organized manner. It includes styles for the table, headings, and overall layout to enhance
+          readability and user experience.
+
+SOURCE CODE LINE ANALYSIS                                                                                            6
+-------------------------
+Detailed line-by-line analysis is available within the code comments for better understanding.
+
+Python files:
+
+    app.py:
+        - Purpose: Serves as the main application file responsible for handling user interface and interactions.
+        - Functions:
+            - __init__: Initializes the application, sets up routes, and configures the application settings.
+            - create_user: Handles the creation of new users by receiving form data, validating it, and saving it to the database through db.py.
+            - login: Manages user login by verifying credentials against the database.
+            - render_template: Renders HTML templates like create_user.html, homepage.html, login.html, and logs.html.
+            - fetch_logs: Retrieves productivity logs from the database and displays them on the logs.html page.
+            - add_task: Allows users to add tasks to their task boards by interacting with the database.
+            - remove_task: Enables users to remove tasks from their task boards.
+            - update_timer: Manages the timer updates and stores the productivity feedback in the database.
+
+    db.py:
+        - Purpose: Manages database communication.
+        - Functions:
+            - __init__: Sets up the database connection parameters.
+            - connect: Establishes a connection to the MySQL database.
+            - create_user: Inserts a new user record into the database.
+            - verify_user: Checks the credentials of a user during login.
+            - fetch_tasks: Retrieves tasks for a specific user from the database.
+            - add_task: Inserts a new task into the user's task board.
+            - remove_task: Deletes a task from the user's task board.
+            - log_productivity: Records productivity feedback and timer data.
+
+JavaScript files:
+
+    timer.js:
+        - Purpose: Manages the timer functionality on the homepage.
+        - Functions:
+            - setTimeBtn.onclick: Opens the modal for setting custom time.
+            - pomoTimeBtn.onclick: Sets the timer to 25 minutes for a Pomodoro session.
+            - setBreakBtn.onclick: Sets the timer to 5 minutes for a break.
+            - startButton.addEventListener: Starts the timer countdown.
+            - stopButton.addEventListener: Stops the timer countdown.
+            - startTimer: Initializes and starts the timer.
+            - stopTimer: Stops the timer and clears the interval.
+            - calculateSubtractTime: Calculates the time to subtract based on productivity rating.
+            - submitFeedbackToServer: Sends productivity feedback to the server for logging.
+
+    homepage.js:
+        - Purpose: Manages the functionality on the homepage, including task boards, tasks, and interactions.
+        - Functions:
+            - openModalTaskBoard: Opens the modal to add a new task board.
+            - removeModalTaskBoard: Opens the modal to remove a task board.
+            - openModalTasks: Opens the modal to add a new task.
+            - removeModalTasks: Opens the modal to remove a task.
+            - editModalTask: Opens the modal to edit task time.
+            - populateTaskBoardDropdown: Populates the task board dropdown with available task boards.
+            - populateTaskDropdown: Populates the task dropdown with tasks from the selected task board.
+            - renderTasksList: Renders the list of tasks for the selected task board.
+            - submitTask: Handles task submission and updates the task board.
+            - removeTask: Handles task removal and updates the task board.
+            - submitFeedbackToServer: Sends productivity feedback to the server for logging.
+
+VARIABLE PURPOSE, SCOPE AND LIFETIME 											7
+------------------------------------
+
+Variables in QuackTime serve various purposes and have different scopes and lifetimes based on their usage:
+
+Variables Evaluation in app.py
+    Global Variables:
+    - No explicit global variables defined; most variables are scoped within functions or classes.
+
+    Variables within Functions:
+    1. form_data
+       - Purpose: Stores form data received from the user.
+       - Scope: Local to functions handling form submissions (e.g., create_user, login).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    2. user
+       - Purpose: Stores user information retrieved from the database.
+       - Scope: Local to functions handling user operations (e.g., login, fetch_logs).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    3. tasks, logs
+       - Purpose: Store tasks or logs data retrieved from the database.
+       - Scope: Local to functions handling task or log retrieval (e.g., fetch_tasks, fetch_logs).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    4. task_id, task_data
+       - Purpose: Store task-related information for adding or removing tasks.
+       - Scope: Local to functions managing tasks (e.g., add_task, remove_task).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+Variables Evaluation in db.py
+    Global Variables:
+    - No explicit global variables defined; most variables are scoped within functions or the class.
+
+    Variables within the Database Class:
+    1. self.host, self.port, self.user, self.password, self.database
+       - Purpose: Store the host, port, username, password, and database name used to establish a connection.
+       - Scope: Instance (belonging to each instance of the Database class).
+       - Lifetime: Exists as long as the instance of the Database class exists.
+
+    2. self.connection
+       - Purpose: Stores the connection object to the MySQL database.
+       - Scope: Instance (belonging to each instance of the Database class).
+       - Lifetime: Exists as long as the instance of the Database class exists.
+
+    Variables within Methods:
+    1. config
+       - Purpose: Stores configuration information for connecting to the database.
+       - Scope: Local to the config_db() method.
+       - Lifetime: Exists within the method execution and is destroyed once the method completes.
+
+    2. insert_data, cursor, insert_query
+       - Purpose: Used for executing SQL queries to add users or notes to the database.
+       - Scope: Local to methods where they are defined (create_user(), add_task(), etc.).
+       - Lifetime: Exist within the method execution and are destroyed once the function completes.
+
+    3. names, list, result
+       - Purpose: Store data retrieved from the database.
+       - Scope: Local to methods where they are defined (fetch_tasks(), fetch_logs(), etc.).
+       - Lifetime: Exist within the method execution and are destroyed once the method completes.
+
+    4. select_data, select_query, update_query, update_data, delete_query, delete_data, log_data, final_id, final_user_id
+       - Purpose: Store data or queries for interacting with the database.
+       - Scope: Local to methods where they are defined (verify_user(), log_productivity(), etc.).
+       - Lifetime: Exist within the method execution and are destroyed once the function completes.
+
+    5. err
+       - Purpose: Stores error messages generated during database operations.
+       - Scope: Local to except blocks where errors are caught.
+       - Lifetime: Exist within the except block execution and are destroyed once the block completes.
+
+Variables Evaluation in timer.js
+    Global Variables:
+    1. intervalId, setTime, isBreak
+       - Purpose: Store the interval ID for the timer, the set time for the timer, and a flag indicating if it is break time.
+       - Scope: Global, accessible throughout the timer.js file.
+       - Lifetime: Exist for the entire runtime of the script.
+
+    Variables within Functions:
+    1. timeVal
+       - Purpose: Stores the time value set by the user.
+       - Scope: Local to functions handling time setting (e.g., setTimeBtn.onclick, pomoTimeBtn.onclick).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    2. taskBoard, task, productivityRating
+       - Purpose: Store the task board name, task name, and productivity rating submitted by the user.
+       - Scope: Local to the setFeedbackForm submission event handler.
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    3. minutes, seconds
+       - Purpose: Store the minutes and seconds for the timer countdown.
+       - Scope: Local to the startTimer function.
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+Variables Evaluation in homepage.js
+    Global Variables:
+    1. taskBoardData
+       - Purpose: Stores task board data for the user.
+       - Scope: Global, accessible throughout the homepage.js file.
+       - Lifetime: Exist for the entire runtime of the script.
+
+    Variables within Functions:
+    1. selectedValue
+       - Purpose: Stores the selected value from a dropdown menu.
+       - Scope: Local to the event handler for dropdown changes.
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    2. optionElement, placeholderOption
+       - Purpose: Store option elements for populating dropdown menus.
+       - Scope: Local to functions populating dropdowns (populateTaskBoardDropdown, populateTaskDropdown).
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+    3. row
+       - Purpose: Stores a table row element for displaying logs.
+       - Scope: Local to the function fetching and rendering logs.
+       - Lifetime: Exist within the function execution and are destroyed once the function completes.
+
+
+DATABASE STRUCTURE AND RELATIONSHIPS											8
+--------------------------
+
+The QuackTime application uses a MySQL database comprising four tables: Users, TaskBoard, Tasks, and Logs. These tables are interconnected to manage user data, task boards, tasks, and productivity logs efficiently. Below is an explanation of each table and how they are connected:
+
+Users Table
+-----------
+This table stores user information, ensuring unique identification for each user through the DuckID.
+
+CREATE TABLE quack_time.Users (
+    DuckID CHAR(9) UNIQUE PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    PassHash VARCHAR(255),
+    PassSalt VARCHAR(255),
+    CONSTRAINT CHK_DuckID_Length CHECK (LENGTH(DuckID) = 9)
+);
+
+- DuckID: Unique identifier for each user.
+- FirstName: User's first name.
+- LastName: User's last name.
+- PassHash: Hashed password for secure authentication.
+- PassSalt: Salt used for hashing the password.
+- CHK_DuckID_Length: Constraint to ensure the DuckID is exactly 9 characters long.
+
+TaskBoard Table
+---------------
+This table contains the task boards associated with each user.
+
+CREATE TABLE quack_time.TaskBoard (
+    BoardID INT AUTO_INCREMENT PRIMARY KEY,
+    DuckID CHAR(9) NOT NULL,
+    BoardName VARCHAR(255),
+    FOREIGN KEY (DuckID) REFERENCES Users(DuckID)
+);
+
+- BoardID: Unique identifier for each task board.
+- DuckID: Reference to the user who owns the task board.
+- BoardName: Name of the task board.
+- FOREIGN KEY (DuckID): Establishes a relationship with the Users table.
+
+Tasks Table
+-----------
+This table stores tasks within each task board.
+
+CREATE TABLE quack_time.Tasks (
+    TaskID INT AUTO_INCREMENT PRIMARY KEY,
+    BoardID INT,
+    TaskName VARCHAR(255),
+    TimeRemaining INT,
+    FOREIGN KEY (BoardID) REFERENCES TaskBoard(BoardID)
+);
+
+- TaskID: Unique identifier for each task.
+- BoardID: Reference to the task board that the task belongs to.
+- TaskName: Name of the task.
+- TimeRemaining: Time remaining to complete the task.
+- FOREIGN KEY (BoardID): Establishes a relationship with the TaskBoard table.
+
+Logs Table
+----------
+This table records productivity logs for each user.
+
+CREATE TABLE quack_time.Logs (
+    LogID INT AUTO_INCREMENT PRIMARY KEY,
+    DuckID CHAR(9) NOT NULL,
+    LogDate DATETIME,
+    BoardName VARCHAR(255),
+    TaskName VARCHAR(255),
+    TimeSpent INT,
+    Rating INT CHECK (Rating BETWEEN 1 AND 5),
+    FOREIGN KEY (DuckID) REFERENCES Users(DuckID)
+);
+
+- LogID: Unique identifier for each log entry.
+- DuckID: Reference to the user who owns the log.
+- LogDate: Date and time of the log entry.
+- BoardName: Name of the task board associated with the log.
+- TaskName: Name of the task associated with the log.
+- TimeSpent: Time spent on the task during the session.
+- Rating: User's productivity rating for the session (1 to 5).
+- FOREIGN KEY (DuckID): Establishes a relationship with the Users table.

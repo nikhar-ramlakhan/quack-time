@@ -1,0 +1,197 @@
+<!--
+This HTML file creates the homepage for the Quack Time application.
+It includes sections for task boards, tasks, a timer, and various modals for setting time, submitting feedback,
+adding and removing tasks, and providing instructions on how to use the application.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quack Time</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/homepage.css">
+    <style>
+        #loadingScreen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greeting">Welcome {{ firstname }}, let's get proDUCKtive!</h1>
+    <div id="loadingScreen">
+        <div class="spinner"></div>
+    </div>
+    <div class="header-buttons">
+        <button class="how-to-use" id="how-to-button">How to Use</button>
+          <button class="how-to-use" id="logs-button">Logs</button>
+        <a href="/logout" class="logout-button">Logout</a>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <div class="header">
+                <h2>Task Board</h2>
+                <div class="button-container">
+                    <button id="removeModalTaskBoard">-</button>
+                    <button id="openModalTaskBoard">+</button>
+                </div>
+            </div>
+            <ul id="taskBoardList"></ul>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <h2>Tasks</h2>
+                <div class="button-container">
+                    <button id="editModalTask" disabled>Edit Time</button>
+                    <button id="removeModalTask" disabled>-</button>
+                    <button id="openModalTasks" disabled>+</button>
+                </div>
+            </div>
+            <ul id="tasksList"></ul>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <h2>Timer</h2>
+            </div>
+            <div id="timer">00:00</div>
+            <div id="timerControls">
+                <button id="startButton">Start</button>
+                <button id="stopButton">Stop</button>
+                <button id="setTimeButton">Set Custom Time</button>
+                <button id="setPomodoro">Set Pomodoro Time</button>
+                <button id="setBreak">Set Break Time</button>
+            </div>
+        </div>
+        <!-- The pop-up to set time -->
+        <div id="setTimeModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Set Time</h2>
+                <form id="setTimeForm">
+                    <label for="timeInput">Enter time in minutes:</label>
+                    <input type="number" id="timeInput" name="timeInput" min="0" required><br><br>
+                    <button type="submit" id="submitTime">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- The pop-up to submit feedback -->
+        <div id="feedbackModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Task Feedback</h2>
+                <form id="setFeedbackForm">
+                    <select id="taskBoardSelect" name="taskBoardSelect" required>
+                        <option value="" disabled selected>Select Task Category...</option>
+                    </select>
+                    <select id="taskSelect" name="taskSelect" required>
+                        <option value="" disabled selected>Select Task...</option>
+                    </select>
+                    <br><br>
+                    <label for="feedbackInput">Enter Ranking of Productivity (From 1 to 5):</label>
+                    <input type="number" id="feedbackInput" name="productivityInput" min="1" max="5" required><br><br>
+                    <button type="submit" id="submitProductivity">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- The pop-up to add tasks -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Task</h2>
+            <form id="taskForm">
+                <label for="taskInput" id="TaskLabel">Task Name:</label>
+                <input type="text" id="taskInput" name="taskInput" required><br><br>
+                <label for="taskTimeNeeded" id="timeNeededLabel">Estimated Time Needed (minutes):</label>
+                <input type="number" id="taskTimeNeeded" name="taskTimeNeeded" min="1" required><br><br>
+                <button type="submit" id="submitTask">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The pop-up for how to use -->
+    <div id="how-to-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="how-to-title">What is the Pomodoro Technique?</h2>
+            <p>The Pomodoro Technique is a time management method that involves breaking work into intervals, typically 25 minutes in length. These "pomodoros," are followed by a short break of 5 minutes.  <br><br>To use this technique effectively, choose a task to focus on and set a timer for 25 minutes. Upon completion of the 25 minutes, set a 5-minute timer to take a break. Repeat these 25-5 minute work-break sessions until the task is completed. <br><br> This method is effective because it promotes sustained concentration and reduces burnout by providing regular breaks. It also helps manage distractions and enhances productivity by creating a sense of urgency and ensuring tasks are tackled in manageable segments. </p>
+            <h3 id="create-tasks">How to Create Tasks</h3>
+            <p>First, create a task board by pressing the "+" button in the Task Board module. Task boards are designed as general categories that tasks will belong to. For example, CS 422 or ENG 208. <br><br> Next, to create a task, select one of your task boards, then click on the "+" button in the Task module. This will create a task bound to the specific board you have selected. <br></p>
+            <h4 id="del-tasks">How to Delete Tasks</h4>
+            <p>Delete a task board by pressing the "-" button in the Task Board module. Then select the board you want to delete. This will delete all associated tasks with such board.<br><br> To delete an individual task, select one of your task boards, then click on the "-" button in the Task module. Select the task you want to delete.</p>
+            <h5 id="productivity">How ProDUCKtivity works</h5>
+            <p>When a non-break timer completes, a feedback form will pop up. Select the task that you are working on and enter your productivity from 1-5. This is based on your own self-judgement of how productive you were. <br><br> Time updates accordingly: <br><blockquote> Productivity of 1: 20% of inputted timer time will be reduced from task <br> Productivity of 2: 40% of inputted timer time will be reduced from task <br> Productivity of 3: 60% of inputted timer time will be reduced from task <br> Productivity of 4: 80% of inputted timer time will be reduced from task <br> Productivity of 5: 100% of inputted timer time will be reduced from task </blockquote><br>Upon clicking submit on the feedback form, this pomodoro session, with the inputted productivity, will be stored in the LOGS tab. Click on 'LOGS' in the upper-right hand corner to view your log.<br><br>Now you should be all set! Have fun applying the Pomodoro Technique and watching your productivity grow! :)</p>
+        </div>
+    </div>
+
+    <!-- The pop-up to remove task boards -->
+    <div id="removetaskBoardModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="removeModalTitle">Remove Task Board</h2>
+            <form id="removeBoardForm">
+                <select id="removeBoardSelect" name="removeBoardSelect" required>
+                    <option value="" disabled selected>Select Task Board to Remove...</option>
+                </select>
+                <button type="submit" id="removeBoardSubmit">Remove Task Board</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The pop-up to remove tasks -->
+    <div id="removeTasksModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="removeTasksModalTitle">Remove Task</h2>
+            <form id="removeTaskForm">
+                <select id="removeTaskSelect" name="removeTaskSelect" required>
+                    <option value="" disabled selected>Select Task to Remove...</option>
+                </select>
+                <button type="submit" id="removeTaskSubmit">Remove Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The pop-up to edit time remaining on tasks -->
+    <div id="editTimeTasksModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="editTimeModalTitle">Edit Time Remaining</h2>
+            <form id="editTimeForm">
+                <select id="editTaskSelect" name="editTaskSelect" required>
+                    <option value="" disabled selected>Select Task to Edit...</option>
+                </select>
+                <br><br>
+                <label for="timeTakeOffInput">Enter new time:</label>
+                <input type="number" id="editTimeInput" name="editTimeInput" min="0" required><br><br>
+                <button type="submit" id="editTaskSubmit">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/homepage.js"></script>
+    <script src="/static/js/timer.js"></script>
+</body>
+</html>

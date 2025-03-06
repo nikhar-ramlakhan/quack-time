@@ -1,0 +1,222 @@
+/*
+This CSS file styles the homepage. It includes elements such as
+the body, container, panels, headers, buttons, timer, task lists, modals, and media queries.
+*/
+
+
+body {
+    font-family: "Monaco", "Courier New", Courier, monospace;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    background-image: url('/static/images/ducktimer.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.container {
+    display: flex;
+    margin-top: 150px;
+    height: 400px;
+    padding: 20px;
+    width: 80%;
+
+}
+.panel {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: rgba(207, 207, 196, 0.9);
+    margin-right: 10px;
+}
+.panel:first-child, .panel:nth-child(3) {
+    background-color: rgba(207, 207, 196, 0.9);
+}
+.panel + .panel {
+    border-left: none;
+}
+.header {
+    min-height: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 5px solid #000;
+}
+.header h2 {
+    margin: 0;
+    font-size: 16px;
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+.header button {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+#timer {
+    font-size: 50px;
+    margin-top: 75px;
+}
+#timerControls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#timerControls button {
+    margin: 5px;
+    font-family: "Monaco", sans-serif;
+}
+
+#timerControls button {
+    min-width: 100px;
+    text-align: center;
+}
+#taskBoardSelect{
+    font-family: "Monaco", sans-serif;
+}
+#taskSelect{
+    font-family: "Monaco", sans-serif;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul li {
+    padding: 5px 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+ul#tasksList li {
+    cursor: default;
+}
+.header-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.how-to-use,
+.logout-button
+{
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-button {
+    background-color: green;
+}
+
+.selected {
+    background-color: yellow;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#how-to-modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 1px;
+}
+#how-to-modal .modal-content {
+    width: 90%;
+    margin: 5% auto 0 auto;
+    max-width: 800px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#how-to-modal .modal-content h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#how-to-modal .modal-content h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#how-to-modal .modal-content h4 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#how-to-modal .modal-content h5 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#how-to-modal .modal-content p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+#greeting {
+    position: absolute;
+    background-color: rgba(255, 255, 0, 0.5);
+    top: 20px;
+    left: 20px;
+    margin: 0;
+}
+
+
+@media (max-width: 800px) {
+    #greeting {
+        font-size: 24px;
+    }
+}
+@media (max-width: 600px) {
+    #greeting {
+        display: none;
+    }
+}

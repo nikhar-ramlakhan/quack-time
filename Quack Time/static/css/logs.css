@@ -1,0 +1,86 @@
+/*
+This CSS file styles the logs page. It includes elements such as the body, header buttons, container, headings, logs container, and table.
+*/
+
+body {
+    font-family: "Monaco", "Courier New", Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    background-image: url('/static/images/ducktimer.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.header-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.back-button,
+.logout-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    width: 80%;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 900; /* Increased font-weight for bolder text */
+}
+
+.logs-container {
+    max-height: 500px; /* Adjust this value as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: 900;
+    text-decoration: underline;
+
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
